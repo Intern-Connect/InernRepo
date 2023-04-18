@@ -5,6 +5,15 @@ const CompanySchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  about:{
+    type : String,
+    required : false
+  },
+  skill:{
+    type : [String],
+    default : [],
+    required : false
+  },
   tinNumber: {
     type: String,
     required: true
@@ -24,8 +33,9 @@ const CompanySchema = new mongoose.Schema({
   posts: {
     type: [String],
     default: []
-  }
-});
+  },
+  
+},{timestamps:true});
 
 const Company = mongoose.model('Company', CompanySchema);
 
