@@ -15,11 +15,11 @@ const StudentSchema = new mongoose.Schema({
   },
   firstName : {
     type:String,
-    defulat : ""
+    default : ""
   },
   lastName : {
     type:String,
-    defulat : ""
+    default : ""
   },
   password: {
     type: String,
