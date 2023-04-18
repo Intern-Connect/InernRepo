@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { AiOutlineUser, AiOutlineMail } from "react-icons/ai";
-import axios from "axios";
+import {axios} from '../axios'
 import { RiLockPasswordLine } from "react-icons/ri";
 
 function Signup() {
@@ -36,7 +36,7 @@ function Signup() {
   };
   return (
     <div className="flex flex-col items-center bg-gray-100 h-screen">
-      <div className="artboard artboard-horizontal phone-7 bg-white m-auto">
+      <div className="bg-white m-auto p-20 rounded-xl shadow-xl">
         <div className="bg-gradient-to-t	 pb-10">
           <div className="flex flex-col justify-center items-center space-y-10">
             <h1 className="font-bold text-2xl md:text-3xl lg:text-4xl xl:5xl text-primary-500 pt-10 pl-2">
@@ -136,7 +136,7 @@ function Signup() {
               <button
                 onClick={submit}
                 type="submit"
-                className="relative border-2 text-center mt-4 p-2 rounded-md w-full"
+                className="relative border-2 text-center mt-4 p-2 rounded-md w-full hover:bg-black hover:text-white active:scale-95 transition-transform ease-in-out delay-75"
               >
                 <h2 className="font-semibold">Create Account</h2>
                 <div className=" rounded-md absolute top-[-15%] left-[-2%] bg-primary-500/[0.2] w-full h-full hover:top-0 hover:left-0 transition transform duration-200 ease-in-out"></div>
