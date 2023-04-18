@@ -14,6 +14,9 @@ const solutionSchema = mongoose.Schema(
             type: String,
             required: true,
         },
-        
     }
 )
+
+const Solution = mongoose.model("Solution", solutionSchema)
+
+module.export = Solution
