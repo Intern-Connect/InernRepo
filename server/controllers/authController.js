@@ -29,3 +29,43 @@ exports.signup = async (req, res) => {
 		});
 	}
 };
+
+
+exports.login = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    if (!email || !password) {
+      return res.status(400).json({
+        status: "fail",
+        message: "Please provide email and password",
+      });
+    }
+
+    const student = await Student.findOne({ email }).select("+password");
+
+    if (!student || !(await student.correctPassword(password, student.password))) {
+      return res.status(401).json({
+        status: "fail",
+        message: "Incorrect email or password",
+      });
+    }
+
+    const token = jwt.sign({ id: student._id }, "your-secret-key-here", {
+			expiresIn: "1h",
+		});
+
+
+    res.status(200).json({
+      status: "success",
+      token,
+      student,
+    });
+
+  }catch(err) {
+    res.status(400).json({
+      status: "fail",
+      message: err,
+    });
+  }
+}
