@@ -1,56 +1,72 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
+const validator = require("validator");
 
 const StudentSchema = new mongoose.Schema({
-  gmail: {
-    type: String,
-    required: true
-  },
-  about:{
-    type : String,
-    required : false,
-  },
-  skill:{
-    type : [String],
-    default : [],
-  },
-  firstName : {
-    type:String,
-    defulat : ""
-  },
-  lastName : {
-    type:String,
-    defulat : ""
-  },
-  password: {
-    type: String,
-    required: true
-  },
-  username: {
-    type: String,
-    required: true
-  },
-  resume: {
-    type: String,
-    required: false
-  },
-  picture: {
-    type: String,
-    required: false
-  },
-  portfolio: {
-    type: String,
-    required: false
-  },
-  category: {
-    type: String,
-    required: true
-  },
-  solved: {
-    type: [String],
-    default: []
-  }
+	email: {
+		type: String,
+		unique: [true, "email already exists in database!"],
+		required: [true, "please enter your email"],
+		match: [
+			/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+			"Please add a valid email",
+		],
+	},
+	about: {
+		type: String,
+		required: false,
+	},
+	skill: {
+		type: [String],
+		default: [],
+	},
+	firstName: {
+		type: String,
+		required: [true, "please enter your first name"],
+		trim: true,
+	},
+	lastName: {
+		type: String,
+		required: [true, "please enter your last name"],
+		trim: true,
+	},
+	password: {
+		type: String,
+		required: true,
+	},
+	passwordConfirm: {
+		type: String,
+		required: [true, "Please confirm your password"],
+		validate: {
+			validator: function (el) {
+				return el === this.password;
+			},
+			message: "Passwords are not the same!",
+		},
+	},
+	resume: {
+		type: String,
+		required: false,
+	},
+	picture: {
+		type: String,
+		required: false,
+	},
+	portfolio: {
+		type: String,
+		required: false,
+	},
+	category: {
+		type: String,
+		required: [true, "please enter your category"],
+	},
+	solved: {
+		type: [String],
+		default: [],
+	},
+},{
+  timestamps: true,
 });
 
-const Student = mongoose.model('Student', StudentSchema);
+const Student = mongoose.model("Student", StudentSchema);
 
 module.exports = Student;
