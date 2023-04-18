@@ -49,7 +49,7 @@ const StudentSchema = new mongoose.Schema(
 		},
 		category: {
 			type: String,
-			required: [true, "please enter your category"],
+			required: false
 		},
 		solved: {
 			type: [String],
