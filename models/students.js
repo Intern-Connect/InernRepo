@@ -5,6 +5,22 @@ const StudentSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  about:{
+    type : String,
+    required : false,
+  },
+  skill:{
+    type : [String],
+    default : [],
+  },
+  firstName : {
+    type:String,
+    defulat : ""
+  },
+  lastName : {
+    type:String,
+    defulat : ""
+  },
   password: {
     type: String,
     required: true
@@ -15,7 +31,7 @@ const StudentSchema = new mongoose.Schema({
   },
   resume: {
     type: String,
-    required: true
+    required: false
   },
   picture: {
     type: String,
