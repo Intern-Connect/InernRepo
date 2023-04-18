@@ -1,71 +1,26 @@
 const jwt = require("jsonwebtoken");
 const Student = require("../models/students");
-
-const signToken = (id) => {
-	return jwt.sign({ id }, process.env.JWT_SECRET, {
-		expiresIn: process.env.JWT_EXPIRES_IN,
-	});
-};
-
-//   const createSendToken = (user, statusCode, req, res) => {
-//     const token = signToken(user._id);
-
-//     res.cookie('jwt', token, {
-//       expires: new Date(
-//         Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
-//       ),
-//       httpOnly: true,
-//       secure: req.secure || req.headers['x-forwarded-proto'] === 'https'
-//     });
-
-//     // Remove password from output
-//     user.password = undefined;
-
-//     res.status(statusCode).json({
-//       status: 'success',
-//       token,
-//       data: {
-//         user
-//       }
-//     });
-//   };
-
-// exports.signup = catchAsync(async (req, res, next) => {
-//     const newUser = await Student.create({
-//       firstName: req.body.firstName,
-//       lastName: req.body.lastName,
-//       email: req.body.email,
-//       password: req.body.password,
-//       passwordConfirm: req.body.passwordConfirm,
-//       catergory: req.body.catergory,
-//     });
-
-//     const url = `${req.protocol}://${req.get('host')}/me`;
-//     // console.log(url);
-//     await new Email(newUser, url).sendWelcome();
-
-//     createSendToken(newUser, 201, req, res);
-//   });
-
+const {promisify} = require("util");
 exports.signup = async (req, res) => {
-	res.send("hey");
-	console.log("hey");
 	try {
 		const student = await Student.create({
 			firstName: req.body.firstName,
 			lastName: req.body.lastName,
 			email: req.body.email,
 			password: req.body.password,
-			passwordConfirm: req.body.passwordConfirm,
-			catergory: req.body.catergory,
+			category: req.body.category,
 		});
-		const token = signToken(student._id);
+
+	
+		const token = jwt.sign({ id: student._id }, "your-secret-key-here", {
+			expiresIn: "1h",
+		});
+
+		
 		res.status(201).json({
 			status: "success",
 			token,
-			data: {
-				student,
-			},
+			student,
 		});
 	} catch (err) {
 		res.status(400).json({
@@ -73,4 +28,82 @@ exports.signup = async (req, res) => {
 			message: err,
 		});
 	}
+};
+
+
+exports.login = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    if (!email || !password) {
+      return res.status(400).json({
+        status: "fail",
+        message: "Please provide email and password",
+      });
+    }
+
+    const student = await Student.findOne({ email }).select("+password");
+
+    if (!student || !(await student.correctPassword(password, student.password))) {
+      return res.status(401).json({
+        status: "fail",
+        message: "Incorrect email or password",
+      });
+    }
+
+    const token = jwt.sign({ id: student._id }, "your-secret-key-here", {
+			expiresIn: "1h",
+		});
+
+
+    res.status(200).json({
+      status: "success",
+      token,
+      student,
+    });
+
+  }catch(err) {
+    res.status(400).json({
+      status: "fail",
+      message: err,
+    });
+  }
+}
+
+exports.protect = async (req, res, next) => {
+  let token;
+  if (
+    req.headers.authorization &&
+    req.headers.authorization.startsWith("Bearer")
+  ) {
+    token = req.headers.authorization.split(" ")[1];
+  }
+
+  if (!token) {
+    return res.status(401).json({
+      status: "fail",
+      message: "You are not logged in! Please log in to get access.",
+    });
+  }
+
+  try {
+    const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
+    const student = await Student.findById(decoded.id);
+
+    if (!student) {
+      return res.status(401).json({
+        status: "fail",
+        message: "The user belonging to this token does no longer exist.",
+      });
+    }
+
+    req.student = student;
+    next();
+  } catch (err) {
+    console.error(err);
+    res.status(401).json({
+      status: "fail",
+      message: "Invalid or expired token",
+    });
+  }
 };

@@ -34,7 +34,9 @@ const CompanySchema = new mongoose.Schema({
     type: [String],
     default: []
   },
-  
+  jobs: {
+    type:[{}]
+  }
 },{timestamps:true});
 
 const Company = mongoose.model('Company', CompanySchema);
