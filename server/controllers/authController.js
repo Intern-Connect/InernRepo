@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 const Student = require("../models/students");
-
+const {promisify} = require("util");
 exports.signup = async (req, res) => {
 	try {
 		const student = await Student.create({
@@ -11,12 +11,12 @@ exports.signup = async (req, res) => {
 			category: req.body.category,
 		});
 
-		// Generate a JWT token
+	
 		const token = jwt.sign({ id: student._id }, "your-secret-key-here", {
 			expiresIn: "1h",
 		});
 
-		// Send the token and student data in the response
+		
 		res.status(201).json({
 			status: "success",
 			token,
@@ -69,3 +69,41 @@ exports.login = async (req, res) => {
     });
   }
 }
+
+exports.protect = async (req, res, next) => {
+  let token;
+  if (
+    req.headers.authorization &&
+    req.headers.authorization.startsWith("Bearer")
+  ) {
+    token = req.headers.authorization.split(" ")[1];
+  }
+
+  if (!token) {
+    return res.status(401).json({
+      status: "fail",
+      message: "You are not logged in! Please log in to get access.",
+    });
+  }
+
+  try {
+    const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
+    const student = await Student.findById(decoded.id);
+
+    if (!student) {
+      return res.status(401).json({
+        status: "fail",
+        message: "The user belonging to this token does no longer exist.",
+      });
+    }
+
+    req.student = student;
+    next();
+  } catch (err) {
+    console.error(err);
+    res.status(401).json({
+      status: "fail",
+      message: "Invalid or expired token",
+    });
+  }
+};
