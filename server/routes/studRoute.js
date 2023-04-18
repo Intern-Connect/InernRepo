@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const studentDB = require('../controllers/studentDB');
 
-router.post("/update",async (req,res)=>{
+router.patch("/update",async (req,res)=>{
     const {_id,obj} = req.body
     let response = await studentDB.updateStud(_id,obj)
     return res.send(response)
