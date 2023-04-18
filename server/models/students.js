@@ -33,16 +33,6 @@ const StudentSchema = new mongoose.Schema({
 		type: String,
 		required: true,
 	},
-	passwordConfirm: {
-		type: String,
-		required: [true, "Please confirm your password"],
-		validate: {
-			validator: function (el) {
-				return el === this.password;
-			},
-			message: "Passwords are not the same!",
-		},
-	},
 	resume: {
 		type: String,
 		required: false,
@@ -62,7 +52,7 @@ const StudentSchema = new mongoose.Schema({
 	solved: {
 		type: [String],
 		default: [],
-	},
+	}
 },{
   timestamps: true,
 });
