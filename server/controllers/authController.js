@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");
 const Student = require("../models/students");
 const {promisify} = require("util");
+
 exports.signup = async (req, res) => {
 	try {
 		const student = await Student.create({
@@ -8,7 +9,6 @@ exports.signup = async (req, res) => {
 			lastName: req.body.lastName,
 			email: req.body.email,
 			password: req.body.password,
-			category: req.body.category,
 		});
 
 	
@@ -87,17 +87,17 @@ exports.protect = async (req, res, next) => {
   }
 
   try {
-    const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
+    const decoded = await promisify(jwt.verify)(token,"your-secret-key-here"); 
     const student = await Student.findById(decoded.id);
-
     if (!student) {
       return res.status(401).json({
-        status: "fail",
+        status: "fail", 
         message: "The user belonging to this token does no longer exist.",
       });
     }
 
     req.student = student;
+
     next();
   } catch (err) {
     console.error(err);
