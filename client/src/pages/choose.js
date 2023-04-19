@@ -12,7 +12,7 @@ function Choose() {
         <div className="divider divider-horizontal">OR</div>
         <div className="grid  card bg-base-300 rounded-box place-items-center p-3 cursor-pointer active:scale-95 transition-transform ease-in-out duration-75">
           <img src={stud}/>
-          <div className="text-4xl font-bold ">Join as Company</div>
+          <div className="text-4xl font-bold ">Join as Student</div>
         </div>
       </div>
     </div>
