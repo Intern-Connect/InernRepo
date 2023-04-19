@@ -13,7 +13,7 @@
 
 
 ## Technologies Used
-    - Node.js and Express for the server-side application logic
+    * Node.js and Express for the server-side application logic
     - MongoDB for the database
     - Mongoose for object modeling and data validation
     - React for the client-side user interface
