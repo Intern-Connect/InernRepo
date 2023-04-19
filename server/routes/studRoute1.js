@@ -6,7 +6,7 @@ const {protect} = require("../controllers/authController");
 router.patch("/update", protect, studController.updateStud);
 
 router.post("/subSolution",protect,async (req,res) =>{ 
-  // ##
+  // ## --
   const {solution, questionId} = req.body
   const {_id} = req.student
   try{
@@ -17,8 +17,7 @@ router.post("/subSolution",protect,async (req,res) =>{
   }
 })
 
-router.get("/getStudentSubmition",protect,async (req,res) =>{ 
-  // ##
+router.post("/getStudentSubmition",protect,async (req,res) =>{ 
   const {_id} = req.student
   try{
     let data = await studController.getStudentSubmitions(_id)
@@ -28,7 +27,25 @@ router.get("/getStudentSubmition",protect,async (req,res) =>{
   }
 })
 
+router.get("getAllQuestions",protect,async (req,res)=>{
+  // -- 
+  try {
+    const data = await studController.getAllQuestions()
+    res.json(data)
+  }catch(err){
+    console.log(err)
+    res.status(400)
+  }
+})
 
+router.post("/apply",protect,(req,res)=>{
 
+  
+
+})
+
+// update
+// sub solution
+// get student submition
 
 module.exports = router;

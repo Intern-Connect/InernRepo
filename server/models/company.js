@@ -30,9 +30,9 @@ const CompanySchema = new mongoose.Schema({
   },
   category: {
     type: String,
-    required: true
+    required: false
   },
-  posts: {
+  questions: {
     type: [String],
     default: []
   },

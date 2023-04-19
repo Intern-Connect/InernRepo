@@ -46,7 +46,7 @@ const insertSolutions = async (problemId,studentId,solution,) =>{
         return false
     }
 }
-
+//butumima
 const getStudentSubmitions = async (id) => {
     // ##
     try {
@@ -58,10 +58,20 @@ const getStudentSubmitions = async (id) => {
     }
 }
 
+const getAllQuestions = async () => {
 
+    try {
+        const data = await Questions.find()
+        return data
+    } catch( err ){
+        return false
+    }
+
+}
 
 module.exports = {
     updateStud,
     insertSolutions,
-    getStudentSubmitions
+    getStudentSubmitions,
+    getAllQuestions
 }

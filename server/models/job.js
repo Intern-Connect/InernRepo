@@ -14,15 +14,20 @@ const jobSchema  = new mongoose.Schema({
     desc: {
         type:String,
     },
-    number_of_intern: {
+    numberOfIntern: {
         type: Number,
         required: true
     },
-    company_id: {
+    companyId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: Company
     },
     questions:{
+        type : [ mongoose.Schema.Types.ObjectId],
+        default : [],
+        ref:Question
+    },
+    appliers:{
         type : [ mongoose.Schema.Types.ObjectId],
         default : [],
         ref:Question
