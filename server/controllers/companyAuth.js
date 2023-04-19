@@ -23,7 +23,6 @@ const signup = async (req, res) => {
 	}
 };
 
-
 const login = async (req, res) => {
 	try {
 	  const { email, password } = req.body;
@@ -61,7 +60,7 @@ const login = async (req, res) => {
 		message: err,
 	  });
 	}
-  }
+}
   
 const protect = async (req, res, next) => {
 	let token;
@@ -99,7 +98,7 @@ const protect = async (req, res, next) => {
 		message: "Invalid or expired token",
 	  });
 	}
-  };
+};
 
 module.exports = {
 	login,signup,protect

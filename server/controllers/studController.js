@@ -80,7 +80,6 @@ const insertSolutions = async (problemId,studentId,solution,) =>{
     } 
 }
 
-
 const getStudentSubmitions = async (_id) => {
     try {
         let res = await Solutions.find({studentId:_id})
@@ -98,4 +97,4 @@ module.exports = {
 	insertSolutions,
 	getStudentSubmitions
 };
- 
+  
