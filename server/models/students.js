@@ -1,3 +1,4 @@
+
 const mongoose = require("mongoose");
 const validator = require("validator");
 const bcrypt = require("bcryptjs");
@@ -39,6 +40,7 @@ const StudentSchema = new mongoose.Schema(
 			type: String,
 			required: false,
 		},
+		
 		picture: {
 			type: String,
 			required: false,

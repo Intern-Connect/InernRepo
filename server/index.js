@@ -1,4 +1,6 @@
 const express = require('express')
+const cloudinary = require('cloudinary').v2;
+
 const cors = require('cors')
 const {connect_db} = require('./config/db')
 const color = require("colors")
@@ -6,7 +8,17 @@ const authRoute = require('./routes/authRoute')
 const studRoute = require("./routes/studRoute")
 require('dotenv').config()
 
+
 const app = express()
+
+// clau
+
+cloudinary.config({
+    cloud_name: "djfvqd23n",
+    api_key: "333756586916113",
+    api_secret: "I5ViJBkeTLh_DGCUyFTDeMBiD-Q"
+  });
+  
 
 
 // middlewares
