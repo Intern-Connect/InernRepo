@@ -1,6 +1,8 @@
 const Student = require("../models/students");
 const cloudinary = require("cloudinary").v2;
 const multer = require("multer");
+const Questions = require("../models/questions");
+const Solutions = require("../models/solutions");
 
 const storage = multer.diskStorage({
 	destination: function (req, file, cb) {
@@ -53,21 +55,35 @@ const updateStud = async (req, res) => {
 	}
 };
 
-const getAllStud = async () => {
-	let res = await Student.find();
-	return res;
-};
 
-const getOneStudent = async (_id) => {
-	let res = await Student.findOne({ _id });
-	return res;
-};
+const getAllQuestions = async () => { 
+ 
+    try { 
+        const data = await Questions.find() 
+        return data 
+    } catch( err ){ 
+        return false 
+    } 
+ 
+}
 
-// const insertSolutions
+const insertSolutions = async (problemId,studentId,solution,) =>{ 
+    try{ 
+        const res = await Solutions.create({problemId,studentId,solution}) 
+		console.log("res")
+        if (res._id == null) throw "can't create solution" 
+		const data = await Student.findByIdAndUpdate(studentId,{$push:{pending:res._id}},{new:true})
+        return [res,data] 
+ 
+    }catch(err ){ 
+        console.log(err) 
+        return false 
+    } 
+}
 
 module.exports = {
-	getAllStud,
-	getOneStudent,
 	updateStud,
 	upload,
+	getAllQuestions,
+	insertSolutions
 };
