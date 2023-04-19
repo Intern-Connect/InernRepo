@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+const Job = require("./job")
+
 
 const CompanySchema = new mongoose.Schema({
   name: {
@@ -35,7 +37,9 @@ const CompanySchema = new mongoose.Schema({
     default: []
   },
   jobs: {
-    type:[{}]
+			type : [ mongoose.Schema.Types.ObjectId],
+      ref : Job,
+      default : []
   }
 },{timestamps:true});
 

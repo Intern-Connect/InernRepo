@@ -2,6 +2,8 @@ const mongoose = require("mongoose");
 const validator = require("validator");
 const bcrypt = require("bcryptjs");
 
+const Solution = require("./solutions") 
+
 const StudentSchema = new mongoose.Schema(
 	{
 		email: {
@@ -52,8 +54,19 @@ const StudentSchema = new mongoose.Schema(
 			required: false
 		},
 		solved: {
-			type: [String],
-			default: [],
+			type : [ mongoose.Schema.Types.ObjectId],
+			default : [],
+			ref:Solution
+		},
+		pending: {
+			type : [ mongoose.Schema.Types.ObjectId],
+			default : [],
+			ref:Solution
+		},
+		accepted: {
+			type : [ mongoose.Schema.Types.ObjectId],
+			default : [],
+			ref:Solution
 		},
 	},
 	{

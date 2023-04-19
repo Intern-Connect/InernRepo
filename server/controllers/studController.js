@@ -1,6 +1,7 @@
 const Student = require("../models/students")
 const Question = require("../models/questions")
 const Solution = require("../models/solutions")
+const Company = require("../models/company")
 
 
 
@@ -24,32 +25,21 @@ const updateStud = async (req, res) => {
     }
 }
 
-const getAllStud = async () =>{
-    let res = await Student.find()
-    return res
-}
+// const getQuestionDetail = async (_id) => {
+//     try {
+//         let res = await Question.findOne({_id})
+//         return res
+//     }catch(err ){
+//         return false
+//     }
+// }
 
-const getOneStudent = async (_id) =>{
-    let res = await Student.findOne({_id})
-    return res
-}
-
-const getQuestionDetail = async (_id) => {
-    try {
-        let res = await Question.find({_id})
-        if(res.length > 0){
-            return [true,res[0]]
-        }
-        return [false]
-    }catch(err ){
-        return [false]
-    }
-}
-
-const insertSolutions = async (problemId,studentId,solution) =>{
+const insertSolutions = async (problemId,studentId,solution,) =>{
     try{
         const res = await Solution.create(problemId,studentId,solution)
-        return false
+        if (rew._id == null) throw "can't create solution"
+        await Student.updateOne({_id},{$push:{pending:res._id}})
+        return true
 
     }catch(err ){
         console.log(err)
@@ -57,37 +47,21 @@ const insertSolutions = async (problemId,studentId,solution) =>{
     }
 }
 
-
-const insertStudentSolution = async (_id,questionId,solutionId) =>{
+const getStudentSubmitions = async (id) => {
+    // ##
     try {
-        let solve = {questionId:solutionId}
-        const res = await Student.updateOne({_id},{$push:{solved:solve}})
-        return true
-    }catch(err){
+        let res = await Solution.find({studentId:id})
+        return res
+    }catch(err ){
         console.log(err)
         return false
     }
 }
-
-const insertQuestion = async (question) =>{
-    try {
-        let data = await Question.create({...question})
-        return data
-    }catch(err){
-        return false
-    }
-}
-
-// const 
 
 
 
 module.exports = {
-    getAllStud,
-    getOneStudent,
     updateStud,
-    getQuestionDetail,
     insertSolutions,
-    insertStudentSolution,
-    insertQuestion
+    getStudentSubmitions
 }

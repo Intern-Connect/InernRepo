@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Company = require('./company');
+const Question = require('./questions');
 
 const jobSchema  = new mongoose.Schema({
     title: {
@@ -20,5 +21,13 @@ const jobSchema  = new mongoose.Schema({
     company_id: {
         type: mongoose.Schema.Types.ObjectId,
         ref: Company
+    },
+    questions:{
+        type : [ mongoose.Schema.Types.ObjectId],
+        default : [],
+        ref:Question
     }
 },{timestamps:true})
+
+
+module.exports = jobSchema

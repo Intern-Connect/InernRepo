@@ -14,6 +14,20 @@ const solutionSchema = mongoose.Schema(
             type: String,
             required: true,
         },
+        status:{
+            type : String,
+            enum:{
+                values : ['success',"pending","failed"],
+            },
+            default : "pending",
+        }
         
     }
 )
+
+
+
+
+const Solution = mongoose.model("solution", solutionSchema);
+
+module.exports = Solution;
