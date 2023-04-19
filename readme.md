@@ -18,31 +18,6 @@
 - React for the client-side user interface
 - JWT for authentication and authorization
 
-
-## Folder Structure
-project/
-├── client/
-│   ├── public/
-│   │   ├── index.html
-│   │   └── favicon.ico
-│   ├── src/
-│   │   ├── components/
-│   │   ├── pages/
-│   │   ├── App.js
-│   │   ├── index.js
-│   │   └── ...
-│   ├── package.json
-│   └── ...
-├── server/
-│   ├── controllers/
-│   ├── models/
-│   ├── routes/
-│   ├── config/
-│   ├── app.js
-│   ├── index.json
-├── .env
-└── README.md
-
 > Install dependencies: npm install
 > Set up environment variables: create a .env file in the root > directory of the project and set the following variables:
 > MONGODB_URI: the URI for your MongoDB database
