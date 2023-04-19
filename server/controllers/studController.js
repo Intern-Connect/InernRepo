@@ -1,4 +1,6 @@
 const Student = require("../models/students")
+const Question = require("../models/questions")
+const Solution = require("../models/solutions")
 
 
 
@@ -32,10 +34,60 @@ const getOneStudent = async (_id) =>{
     return res
 }
 
-// const insertSolutions
+const getQuestionDetail = async (_id) => {
+    try {
+        let res = await Question.find({_id})
+        if(res.length > 0){
+            return [true,res[0]]
+        }
+        return [false]
+    }catch(err ){
+        return [false]
+    }
+}
+
+const insertSolutions = async (problemId,studentId,solution) =>{
+    try{
+        const res = await Solution.create(problemId,studentId,solution)
+        return false
+
+    }catch(err ){
+        console.log(err)
+        return false
+    }
+}
+
+
+const insertStudentSolution = async (_id,questionId,solutionId) =>{
+    try {
+        let solve = {questionId:solutionId}
+        const res = await Student.updateOne({_id},{$push:{solved:solve}})
+        return true
+    }catch(err){
+        console.log(err)
+        return false
+    }
+}
+
+const insertQuestion = async (question) =>{
+    try {
+        let data = await Question.create({...question})
+        return data
+    }catch(err){
+        return false
+    }
+}
+
+// const 
+
+
 
 module.exports = {
     getAllStud,
     getOneStudent,
-    updateStud
+    updateStud,
+    getQuestionDetail,
+    insertSolutions,
+    insertStudentSolution,
+    insertQuestion
 }
