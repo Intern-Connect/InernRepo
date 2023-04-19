@@ -3,12 +3,12 @@
 **This website is designed to help African university students find internships at companies and organizations across the continent.**
 
 ## Features
-**-** Students can create accounts and profiles to showcase their skills and interests
-**-** Companies and organizations can create accounts and post internship opportunities
-**-** Students can search for internships by keyword and other criteria
-**-** Companies and organizations can search for students by skills, experience, and other criteria
-**-** Students can apply for internships through the website and track the status of their applications
-**-** Companies and organizations can review and manage applications from students
+- Students can create accounts and profiles to showcase their skills and interests
+- Companies and organizations can create accounts and post internship opportunities
+- Students can search for internships by keyword and other criteria
+- Companies and organizations can search for students by skills, experience, and other criteria
+- Students can apply for internships through the website and track the status of their applications
+- Companies and organizations can review and manage applications from students
 
 
 ## Technologies Used
