@@ -3,11 +3,13 @@ const mongoose = require("mongoose")
 const solutionSchema = mongoose.Schema(
     {
         problemId: {
-            type: String,
+            type :  mongoose.Schema.Types.ObjectId, 
+            ref : "question",
             required: true,
         },
         studentId: {
-            type: String,
+            type :  mongoose.Schema.Types.ObjectId, 
+            ref : "student",
             required: true,
         },
         solution: {

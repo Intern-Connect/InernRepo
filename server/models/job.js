@@ -1,10 +1,8 @@
 const mongoose = require('mongoose');
-const Company = require('./company');
-const Question = require('./questions');
 
 const jobSchema  = new mongoose.Schema({
     title: {
-        type: String,
+        type: String, 
         required: true,
     },
     tag: {
@@ -20,19 +18,20 @@ const jobSchema  = new mongoose.Schema({
     },
     companyId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: Company
+        ref: "Company"
     },
     questions:{
         type : [ mongoose.Schema.Types.ObjectId],
         default : [],
-        ref:Question
+        ref:"Question"
     },
     appliers:{
         type : [ mongoose.Schema.Types.ObjectId],
         default : [],
-        ref:Question
+        ref:"Question"
     }
 },{timestamps:true})
 
+const Jobs = mongoose.model("job", jobSchema);
 
-module.exports = jobSchema
+module.exports = Jobs

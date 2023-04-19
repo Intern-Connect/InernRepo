@@ -4,6 +4,7 @@ const {promisify} = require("util");
 
 exports.signup = async (req, res) => {
 	try {
+
 		const student = await Student.create({
 			firstName: req.body.firstName,
 			lastName: req.body.lastName,
@@ -11,22 +12,23 @@ exports.signup = async (req, res) => {
 			password: req.body.password,
 		});
 
-	
 		const token = jwt.sign({ id: student._id }, "your-secret-key-here", {
 			expiresIn: "1h",
 		});
 
-		
 		res.status(201).json({
 			status: "success",
 			token,
 			student,
 		});
+
 	} catch (err) {
-		res.status(400).json({
+		
+    res.status(400).json({
 			status: "fail",
 			message: err,
 		});
+    
 	}
 };
 
