@@ -3,6 +3,7 @@ const cloudinary = require("cloudinary").v2;
 const multer = require("multer");
 const Questions = require("../models/questions");
 const Solutions = require("../models/solutions");
+const Jobs = require("../models/job");
 
 const storage = multer.diskStorage({
 	destination: function (req, file, cb) {
@@ -90,11 +91,21 @@ const getStudentSubmitions = async (_id) => {
     }
 }
 
+const getPosts = async (_id) =>{
+	try{
+		const data = await Jobs.find()
+		return data
+	}catch(err){
+		return false
+	}
+}
+
 module.exports = {
 	updateStud,
 	upload,
 	getAllQuestions,
 	insertSolutions,
-	getStudentSubmitions
+	getStudentSubmitions,
+	getPosts
 };
   

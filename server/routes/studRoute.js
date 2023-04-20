@@ -13,9 +13,7 @@ router.patch(
 	studController.updateStud
 );
  
-
 // get questions
-
 router.get("/getAllQuestions",protect,async (req,res)=>{ 
 	try { 
 	  const data = await studController.getAllQuestions() 
@@ -26,7 +24,20 @@ router.get("/getAllQuestions",protect,async (req,res)=>{
 	} 
   })
 
-// submit queistions
+
+router.get("/getPosts",protect,async (req,res)=>{ 
+	try { 
+		const data = await studController.getPosts() 
+		if (data == false) throw "something goes wrong"
+		res.json(data) 
+	}catch(err){ 
+		console.log(err) 
+		res.status(400) 
+	} 
+})
+  
+
+// submit questions
 router.post("/subSolution/:id",protect,async (req,res) =>{  
 	// ## 
 	const {solution} = req.body 
@@ -37,9 +48,9 @@ router.post("/subSolution/:id",protect,async (req,res) =>{
 	}catch(err){ 
 	  res.status(400).send(true) 
 	} 
-  })
+})
 
-
+//
 router.post("/getStudentSubmition",protect,async (req,res) =>{ 
 	const {_id} = req.student
 	try{
@@ -49,5 +60,7 @@ router.post("/getStudentSubmition",protect,async (req,res) =>{
 	  res.status(400).send(true)
 	}
 })
+
+
 
 module.exports = router;

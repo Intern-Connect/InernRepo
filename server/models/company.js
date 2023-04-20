@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 const Question = require("./questions");
 const Job = require("./job");
-
+   
 const CompanySchema = new mongoose.Schema(
 	{
 		picture: {

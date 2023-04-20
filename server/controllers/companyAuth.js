@@ -92,6 +92,7 @@ const protect = async (req, res, next) => {
   
 	  next();
 	} catch (err) {
+		
 	  console.error(err);
 	  res.status(401).json({
 		status: "fail",
